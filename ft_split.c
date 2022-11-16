@@ -6,7 +6,7 @@
 /*   By: ddychus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 14:11:23 by ddychus           #+#    #+#             */
-/*   Updated: 2022/11/15 16:04:03 by ddychus          ###   ########.fr       */
+/*   Updated: 2022/11/15 18:18:05 by ddychus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,16 @@ char	*get_word(char const *s, char c)
 	return (ret);
 }
 
+void	ft_free(char **split)
+{
+	unsigned int	i;
+
+	i = -1;
+	while (split[++i])
+		free(split[i]);
+	free(split);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	**ret;
@@ -79,6 +89,11 @@ char	**ft_split(char const *s, char c)
 		if (*s)
 		{
 			ret[i] = get_word(s, c);
+			if (!ret[i])
+			{
+				ft_free(ret);
+				return (0);
+			}
 			i++;
 		}
 		while (*s && *s != c)
